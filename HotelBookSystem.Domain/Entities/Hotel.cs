@@ -20,7 +20,7 @@ namespace HotelBookSystem.Domain.Entities
         public string? Description { get; set; }
         [Display(Name = "Цена за ночь")]
         public double? Price { get; set; }
-        [Range(1, 3)]
+        [Range(1, 30)]
         public int Occupancy { get; set; }
         [NotMapped]
         public IFormFile? Image { get; set; }
