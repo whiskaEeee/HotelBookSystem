@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HotelBookSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelBookSystem.Infrastructure.Data
@@ -14,5 +15,6 @@ namespace HotelBookSystem.Infrastructure.Data
             
         }
 
+        public DbSet<Hotel> Hotels { get; set; }
     }
 }
