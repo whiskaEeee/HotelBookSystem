@@ -10,11 +10,12 @@ namespace HotelBookSystem.Web.Controllers
     {
         private readonly ApplicationDbContext _db;
 
-        public HotelController(ApplicationDbContext db  )
+        public HotelController(ApplicationDbContext db)
         {
             _db = db;
         }
 
+        [HttpGet]
         public IActionResult Index()
         {
             var Hotels = _db.Hotels.ToList();
@@ -22,9 +23,32 @@ namespace HotelBookSystem.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update(int Id)
+        public IActionResult Create()
         {
-            Hotel? item = _db.Hotels.FirstOrDefault(h => h.Id == Id);
+            return View();
+        }
+
+        public IActionResult Create(Hotel obj)
+        {
+            if (obj.Name == obj.Description)
+            {
+                ModelState.AddModelError("name", "Описание должно отличаться от имени");
+            }
+            if (ModelState.IsValid)
+            {
+                obj.Last_Update = DateOnly.FromDateTime(DateTime.Now);
+                _db.Hotels.Add(obj);
+                _db.SaveChanges();
+                TempData["success"] = "Успешно создано";
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult Update(int hotelId)
+        {
+            Hotel? item = _db.Hotels.FirstOrDefault(h => h.Id == hotelId);
             if (item is null)
             {
                 return RedirectToAction("Error", "Home");
@@ -35,18 +59,43 @@ namespace HotelBookSystem.Web.Controllers
         [HttpPost]
         public IActionResult Update(Hotel obj)
         {
-            if(obj is not null)
+            if (obj.Name == obj.Description)
             {
-                if (ModelState.IsValid && obj.Id > 0)
-                {
-                    _db.Hotels.Update(obj);
-
-                    _db.SaveChanges();
-                }
+                ModelState.AddModelError("name", "Описание должно отличаться от имени");
             }
-            return RedirectToAction("Index");
-
+            if (ModelState.IsValid && obj.Id > 0)
+            {
+                _db.Hotels.Update(obj);
+                _db.SaveChanges();
+                TempData["success"] = "Успешно обновлено";
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
         }
 
+        [HttpGet]
+        public IActionResult Delete(int hotelId)
+        {
+            Hotel? obj = _db.Hotels.FirstOrDefault(u => u.Id == hotelId);
+            if (obj is null)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(Hotel obj)
+        {
+            Hotel? objFromDb = _db.Hotels.FirstOrDefault(u => u.Id == obj.Id);
+            if (objFromDb is not null)
+            {
+                _db.Remove(objFromDb);
+                _db.SaveChanges();
+                TempData["success"] = "Успешно удалено";
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
     }
 }
