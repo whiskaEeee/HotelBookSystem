@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using HotelBookSystem.Application.Common.Interfaces;
 using HotelBookSystem.Domain.Entities;
 using HotelBookSystem.Infrastructure.Data;
 using HotelBookSystem.Web.Models;
@@ -8,17 +9,17 @@ namespace HotelBookSystem.Web.Controllers
 {
     public class HotelController : Controller
     {
-        private readonly ApplicationDbContext _db;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public HotelController(ApplicationDbContext db)
+        public HotelController(IUnitOfWork unitOfWork)
         {
-            _db = db;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var Hotels = _db.Hotels.ToList();
+            var Hotels = _unitOfWork.Hotel.GetAll();
             return View(Hotels);
         }
 
@@ -28,6 +29,7 @@ namespace HotelBookSystem.Web.Controllers
             return View();
         }
 
+        [HttpPost]
         public IActionResult Create(Hotel obj)
         {
             if (obj.Name == obj.Description)
@@ -37,8 +39,8 @@ namespace HotelBookSystem.Web.Controllers
             if (ModelState.IsValid)
             {
                 obj.Last_Update = DateOnly.FromDateTime(DateTime.Now);
-                _db.Hotels.Add(obj);
-                _db.SaveChanges();
+                _unitOfWork.Hotel.Add(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Успешно создано";
                 return RedirectToAction(nameof(Index));
             }
@@ -48,7 +50,7 @@ namespace HotelBookSystem.Web.Controllers
         [HttpGet]
         public IActionResult Update(int hotelId)
         {
-            Hotel? item = _db.Hotels.FirstOrDefault(h => h.Id == hotelId);
+            Hotel? item = _unitOfWork.Hotel.Get(u => u.Id == hotelId);
             if (item is null)
             {
                 return RedirectToAction("Error", "Home");
@@ -65,8 +67,8 @@ namespace HotelBookSystem.Web.Controllers
             }
             if (ModelState.IsValid && obj.Id > 0)
             {
-                _db.Hotels.Update(obj);
-                _db.SaveChanges();
+                _unitOfWork.Hotel.Update(obj);
+                _unitOfWork.Save();
                 TempData["success"] = "Успешно обновлено";
                 return RedirectToAction(nameof(Index));
             }
@@ -76,7 +78,7 @@ namespace HotelBookSystem.Web.Controllers
         [HttpGet]
         public IActionResult Delete(int hotelId)
         {
-            Hotel? obj = _db.Hotels.FirstOrDefault(u => u.Id == hotelId);
+            Hotel? obj = _unitOfWork.Hotel.Get(u => u.Id == hotelId);
             if (obj is null)
             {
                 return RedirectToAction("Error", "Home");
@@ -87,11 +89,11 @@ namespace HotelBookSystem.Web.Controllers
         [HttpPost]
         public IActionResult Delete(Hotel obj)
         {
-            Hotel? objFromDb = _db.Hotels.FirstOrDefault(u => u.Id == obj.Id);
+            Hotel? objFromDb = _unitOfWork.Hotel.Get(u => u.Id == obj.Id);
             if (objFromDb is not null)
             {
-                _db.Remove(objFromDb);
-                _db.SaveChanges();
+                _unitOfWork.Hotel.Remove(objFromDb);
+                _unitOfWork.Save();
                 TempData["success"] = "Успешно удалено";
                 return RedirectToAction(nameof(Index));
             }
