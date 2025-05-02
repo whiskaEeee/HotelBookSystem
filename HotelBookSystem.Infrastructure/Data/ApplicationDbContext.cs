@@ -16,6 +16,7 @@ namespace HotelBookSystem.Infrastructure.Data
         }
 
         public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<HotelNumber> HotelNumbers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -67,7 +68,52 @@ namespace HotelBookSystem.Infrastructure.Data
                     Occupancy = 8,
                     ImageUrl = "https://placehold.co/600x406"
                 }
-                );
+            );
+
+            modelBuilder.Entity<HotelNumber>().HasData(
+                new HotelNumber
+                {
+                    Hotel_Number = 201,
+                    HotelId = 2,
+                },
+                new HotelNumber
+                {
+                    Hotel_Number = 202,
+                    HotelId = 2,
+                },
+                new HotelNumber
+                {
+                    Hotel_Number = 203,
+                    HotelId = 2,
+                },
+                new HotelNumber
+                {
+                    Hotel_Number = 301,
+                    HotelId = 3,
+                },
+                new HotelNumber
+                {
+                    Hotel_Number = 302,
+                    HotelId = 3,
+                },
+                new HotelNumber
+                {
+                    Hotel_Number = 401,
+                    HotelId = 4,
+                },
+                new HotelNumber
+                {
+                    Hotel_Number = 402,
+                    HotelId = 4,
+                },
+                new HotelNumber
+                {
+                    Hotel_Number = 403,
+                    HotelId = 4,
+                }
+            );
+
+
         }
     }
 }
