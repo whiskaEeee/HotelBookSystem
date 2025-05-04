@@ -14,12 +14,10 @@ namespace HotelBookSystem.Web.Controllers
     public class HotelNumberController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ApplicationDbContext _db;
 
         public HotelNumberController(IUnitOfWork unitOfWork, ApplicationDbContext db)
         {
             _unitOfWork = unitOfWork;
-            _db = db;
         }
 
 
