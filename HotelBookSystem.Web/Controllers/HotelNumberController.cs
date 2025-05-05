@@ -15,7 +15,7 @@ namespace HotelBookSystem.Web.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public HotelNumberController(IUnitOfWork unitOfWork, ApplicationDbContext db)
+        public HotelNumberController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
