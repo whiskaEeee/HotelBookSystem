@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBookSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250505073121_UpdateHotelTable")]
-    partial class UpdateHotelTable
+    [Migration("20250505191433_AddAndSeedTables")]
+    partial class AddAndSeedTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,25 +53,25 @@ namespace HotelBookSystem.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            HotelId = 4,
+                            HotelId = 1,
                             Name = "Private Pool"
                         },
                         new
                         {
                             Id = 2,
-                            HotelId = 4,
+                            HotelId = 1,
                             Name = "Microwave"
                         },
                         new
                         {
                             Id = 3,
-                            HotelId = 4,
+                            HotelId = 1,
                             Name = "Private Balcony"
                         },
                         new
                         {
                             Id = 4,
-                            HotelId = 4,
+                            HotelId = 1,
                             Name = "1 king bed and 1 sofa bed"
                         },
                         new
@@ -115,6 +115,24 @@ namespace HotelBookSystem.Infrastructure.Migrations
                             Id = 11,
                             HotelId = 3,
                             Name = "Private Balcony"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            HotelId = 4,
+                            Name = "Infinity Pool"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            HotelId = 4,
+                            Name = "Spa and Wellness Center"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            HotelId = 4,
+                            Name = "Private Beach Access"
                         });
                 });
 
@@ -157,48 +175,39 @@ namespace HotelBookSystem.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
+                            Id = 1,
+                            Description = "Современный отель Mirage предлагает стильный и комфортный отдых в самом сердце города. Интерьеры сочетают в себе элегантность и минимализм, создавая атмосферу покоя и уюта. Идеально подходит как для деловых поездок, так и для туристов.",
+                            ImageUrl = "\\images\\HotelImages\\8ad226ff-832a-4db3-a6b4-b3cc4a6287a6.png",
+                            Name = "Mirage",
+                            Occupancy = 30,
+                            Price = 180.0
+                        },
+                        new
+                        {
                             Id = 2,
-                            Description = "A peaceful retreat by the ocean with stunning sunset views.",
-                            ImageUrl = "https://placehold.co/600x402",
-                            Name = "Seaside Escape",
-                            Occupancy = 15,
-                            Price = 5200.0
+                            Description = "Hotel Veronica — это уютный 3-звездочный отель для тех, кто ищет комфортное и доступное жильё. Он расположен в спокойном районе, недалеко от общественного транспорта и популярных достопримечательностей.",
+                            ImageUrl = "\\images\\HotelImages\\880d4c1c-bf94-497e-ab9d-c1258a386b01.jpg",
+                            Name = "Veronica",
+                            Occupancy = 30,
+                            Price = 90.0
                         },
                         new
                         {
                             Id = 3,
-                            Description = "Cozy lodge located in the heart of the mountains, perfect for ski lovers.",
-                            ImageUrl = "https://placehold.co/600x403",
-                            Name = "Mountain Lodge",
-                            Occupancy = 10,
-                            Price = 6100.0
+                            Description = "Отель \"Marina\" — это идеальное место для отдыха у моря. С его террасы открывается захватывающий вид на бескрайний океан. Номера оформлены в современном морском стиле с использованием натуральных материалов и цветов, создающих атмосферу уюта и свежести.",
+                            ImageUrl = "\\images\\HotelImages\\e19e7191-30d0-49f1-82a9-8442f105df3b.jpeg",
+                            Name = "Marina",
+                            Occupancy = 30,
+                            Price = 220.0
                         },
                         new
                         {
                             Id = 4,
-                            Description = "Modern hotel in the city center with quick access to all attractions.",
-                            ImageUrl = "https://placehold.co/600x404",
-                            Name = "Urban Stay",
-                            Occupancy = 40,
-                            Price = 4500.0
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "Luxurious desert resort with pools, spa, and unforgettable night skies.",
-                            ImageUrl = "https://placehold.co/600x405",
-                            Name = "Desert Oasis",
-                            Occupancy = 12,
-                            Price = 7400.0
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "Secluded cabins surrounded by ancient trees and wildlife.",
-                            ImageUrl = "https://placehold.co/600x406",
-                            Name = "Forest Hideaway",
-                            Occupancy = 8,
-                            Price = 3300.0
+                            Description = "Отель Palace — это уникальное место для тех, кто ценит роскошь и комфорт. Номера, оформленные в классическом стиле, с панорамными окнами, предлагают потрясающий вид на город.",
+                            ImageUrl = "\\images\\HotelImages\\66787e93-c4fe-4ab0-a741-8fb47dfa9440.png",
+                            Name = "Palace",
+                            Occupancy = 30,
+                            Price = 300.0
                         });
                 });
 
@@ -222,6 +231,21 @@ namespace HotelBookSystem.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
+                            Hotel_Number = 101,
+                            HotelId = 1
+                        },
+                        new
+                        {
+                            Hotel_Number = 102,
+                            HotelId = 1
+                        },
+                        new
+                        {
+                            Hotel_Number = 103,
+                            HotelId = 1
+                        },
+                        new
+                        {
                             Hotel_Number = 201,
                             HotelId = 2
                         },
@@ -243,6 +267,11 @@ namespace HotelBookSystem.Infrastructure.Migrations
                         new
                         {
                             Hotel_Number = 302,
+                            HotelId = 3
+                        },
+                        new
+                        {
+                            Hotel_Number = 303,
                             HotelId = 3
                         },
                         new
