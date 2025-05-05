@@ -10,14 +10,13 @@ namespace HotelBookSystem.Infrastructure.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-        {
-            
-        }
-
         public DbSet<Hotel> Hotels { get; set; }
         public DbSet<HotelNumber> HotelNumbers { get; set; }
         public DbSet<Amenity> Amenities { get; set; }
+
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+        {
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,52 +25,65 @@ namespace HotelBookSystem.Infrastructure.Data
             modelBuilder.Entity<Hotel>().HasData(
                 new Hotel
                 {
+                    Id = 1,
+                    Name = "Mirage",
+                    Description = "Современный отель Mirage предлагает стильный и комфортный отдых в самом сердце города." +
+                    " Интерьеры сочетают в себе элегантность и минимализм, создавая атмосферу покоя и уюта." +
+                    " Идеально подходит как для деловых поездок, так и для туристов.",
+                    Price = 180,
+                    Occupancy = 30,
+                    ImageUrl = "\\images\\HotelImages\\8ad226ff-832a-4db3-a6b4-b3cc4a6287a6.png"
+                },
+                new Hotel
+                {
                     Id = 2,
-                    Name = "Seaside Escape",
-                    Description = "A peaceful retreat by the ocean with stunning sunset views.",
-                    Price = 5200,
-                    Occupancy = 15,
-                    ImageUrl = "https://placehold.co/600x402"
+                    Name = "Veronica",
+                    Description = "Hotel Veronica — это уютный 3-звездочный отель для тех, кто ищет комфортное и доступное жильё." +
+                    " Он расположен в спокойном районе, недалеко от общественного транспорта и популярных достопримечательностей.",
+                    Price = 90,
+                    Occupancy = 30,
+                    ImageUrl = "\\images\\HotelImages\\880d4c1c-bf94-497e-ab9d-c1258a386b01.jpg"
                 },
                 new Hotel
                 {
                     Id = 3,
-                    Name = "Mountain Lodge",
-                    Description = "Cozy lodge located in the heart of the mountains, perfect for ski lovers.",
-                    Price = 6100,
-                    Occupancy = 10,
-                    ImageUrl = "https://placehold.co/600x403"
+                    Name = "Marina",
+                    Description = "Отель \"Marina\" — это идеальное место для отдыха у моря." +
+                    " С его террасы открывается захватывающий вид на бескрайний океан." +
+                    " Номера оформлены в современном морском стиле с использованием натуральных материалов и цветов," +
+                    " создающих атмосферу уюта и свежести.",
+                    Price = 220,
+                    Occupancy = 30,
+                    ImageUrl = "\\images\\HotelImages\\e19e7191-30d0-49f1-82a9-8442f105df3b.jpeg"
                 },
                 new Hotel
                 {
                     Id = 4,
-                    Name = "Urban Stay",
-                    Description = "Modern hotel in the city center with quick access to all attractions.",
-                    Price = 4500,
-                    Occupancy = 40,
-                    ImageUrl = "https://placehold.co/600x404"
-                },
-                new Hotel
-                {
-                    Id = 5,
-                    Name = "Desert Oasis",
-                    Description = "Luxurious desert resort with pools, spa, and unforgettable night skies.",
-                    Price = 7400,
-                    Occupancy = 12,
-                    ImageUrl = "https://placehold.co/600x405"
-                },
-                new Hotel
-                {
-                    Id = 6,
-                    Name = "Forest Hideaway",
-                    Description = "Secluded cabins surrounded by ancient trees and wildlife.",
-                    Price = 3300,
-                    Occupancy = 8,
-                    ImageUrl = "https://placehold.co/600x406"
+                    Name = "Palace",
+                    Description = "Отель Palace — это уникальное место для тех, кто ценит роскошь и комфорт. " +
+                    "Номера, оформленные в классическом стиле, с панорамными окнами, предлагают потрясающий вид на город.",
+                    Price = 300,
+                    Occupancy = 30,
+                    ImageUrl = "\\images\\HotelImages\\66787e93-c4fe-4ab0-a741-8fb47dfa9440.png"
                 }
             );
 
             modelBuilder.Entity<HotelNumber>().HasData(
+                new HotelNumber
+                {
+                    Hotel_Number = 101,
+                    HotelId = 1,
+                },
+                new HotelNumber
+                {
+                    Hotel_Number = 102,
+                    HotelId = 1,
+                },
+                new HotelNumber
+                {
+                    Hotel_Number = 103,
+                    HotelId = 1,
+                },
                 new HotelNumber
                 {
                     Hotel_Number = 201,
@@ -99,6 +111,11 @@ namespace HotelBookSystem.Infrastructure.Data
                 },
                 new HotelNumber
                 {
+                    Hotel_Number = 303,
+                    HotelId = 3,
+                },
+                new HotelNumber
+                {
                     Hotel_Number = 401,
                     HotelId = 4,
                 },
@@ -118,25 +135,25 @@ namespace HotelBookSystem.Infrastructure.Data
                 new Amenity
                 {
                     Id = 1,
-                    HotelId = 4,
+                    HotelId = 1,
                     Name = "Private Pool"
                 },
                 new Amenity
                 {
                     Id = 2,
-                    HotelId = 4,
+                    HotelId = 1,
                     Name = "Microwave"
                 },
                 new Amenity
                 {
                     Id = 3,
-                    HotelId = 4,
+                    HotelId = 1,
                     Name = "Private Balcony"
                 },
                 new Amenity
                 {
                     Id = 4,
-                    HotelId = 4,
+                    HotelId = 1,
                     Name = "1 king bed and 1 sofa bed"
                 },
                 new Amenity
@@ -180,9 +197,26 @@ namespace HotelBookSystem.Infrastructure.Data
                     Id = 11,
                     HotelId = 3,
                     Name = "Private Balcony"
+                },
+                new Amenity
+                {
+                    Id = 12,
+                    HotelId = 4,
+                    Name = "Infinity Pool"
+                },
+                new Amenity
+                {
+                    Id = 13,
+                    HotelId = 4,
+                    Name = "Spa and Wellness Center"
+                },
+                new Amenity
+                {
+                    Id = 14,
+                    HotelId = 4,
+                    Name = "Private Beach Access"
                 }
             );
-
         }
     }
 }
