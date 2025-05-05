@@ -1,67 +1,82 @@
 ﻿@model Hotel
 
-<div class="w-100 card border-0 p-4">
-    <div class="card-header bg-success bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="text-white py-2">Delete Hotel</h2>
-            </div>
-        </div>
+<div class="card mt-2 mx-auto p-4 bg-light w-100">
+    <div class="card-header border-0 text-light text-center dark blue"
+         style="background-image: linear-gradient(-30deg, rgba(0, 118, 189, 0.1), transparent 100%);">
+        <h3 class="mb-0">Удалить отель</h3>
     </div>
-    <div class="card-body border p-4">
-        <form method="post" class="row" enctype="multipart/form-data">
-            <input asp-for="Id" hidden class="form-control border shadow" />
-            <div class="col-10">
-                <div class="p-3">
-                <div class="form-floating py-1 col-12">
-                    <input asp-for="Name" disabled class="form-control border shadow" />
-                    <label asp-for="Name" class="ms-2"></label>
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-floating py-1 col-12">
-                    <input asp-for="Description" disabled class="form-control border shadow" />
-                    <label asp-for="Description" class="ms-2"></label>
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="form-floating py-1 col-12">
-                    <input asp-for="Price" disabled class="form-control border shadow" />
-                    <label asp-for="Price" class="ms-2"></label>
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
-                <div class="form-floating py-1 col-12">
-                    <input asp-for="Occupancy" disabled class="form-control border shadow" />
-                    <label asp-for="Occupancy" class="ms-2"></label>
-                    <span asp-validation-for="Occupancy" class="text-danger"></span>
-                </div>
-                <div class="form-floating py-1 col-12">
-                    <input asp-for="Image" disabled class="form-control border shadow" />
-                    <input asp-for="ImageUrl" hidden class="form-control border shadow" />
-                    <label asp-for="ImageUrl" class="ms-2"></label>
-                    <span asp-validation-for="Image" class="text-danger"></span>
-                </div>
-                <div class="row pt-2">
-                    <div class="col-6 col-md-3">
-                        <button type="submit" class="btn btn-danger w-100">
-                            <i class="bi bi-check-circle"></i> Delete
-                        </button>
+    <div class="card-body bg-light">
+        <div class="container">
+            <form method="post" class="row" enctype="multipart/form-data">
+                <input asp-for="Id" hidden />
+                <div class="col-10">
+                    <div class="controls">
+                        <div class="row">
+                            <div class="form-floating py-1 col-12">
+                                <input asp-for="Name" disabled class="form-control border shadow" />
+                                <label asp-for="Name" class="ms-2"></label>
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-floating py-1 col-12">
+                                    <input asp-for="Price" disabled class="form-control border shadow" />
+                                    <label asp-for="Price" class="ms-2"></label>
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating py-1 col-12">
+                                    <input asp-for="Occupancy" disabled class="form-control border shadow" />
+                                    <label asp-for="Occupancy" class="ms-2"></label>
+                                    <span asp-validation-for="Occupancy" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-floating py-1 col-12">
+                                <textarea asp-for="Description"
+                                          disabled class="form-control border shadow auto-resize"
+                                          rows="1"
+                                          style="overflow:hidden;"></textarea>
+                                <label asp-for="Description" class="ms-2"></label>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-floating py-1 col-12">
+                                <input asp-for="ImageUrl" hidden class="form-control border shadow" />
+                                <input asp-for="Image" disabled class="form-control border shadow" />
+                                <label asp-for="ImageUrl" class="ms-2"></label>
+                                <span asp-validation-for="Image" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-6 col-md-3">
+                                <button type="submit" class="btn btn-danger w-100">
+                                    <i class="bi bi-check-circle"></i> Удалить
+                                </button>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <a asp-controller="Hotel" asp-action="Index" class="btn btn-secondary w-100">
+                                    <i class="bi bi-x-circle"></i> Отмена
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-6 col-md-3">
-                        <a asp-controller="Hotel" asp-action="Index" class="btn btn-secondary w-100">
-                            <i class="bi bi-x-circle"></i> Cancel
-                        </a>
-                    </div>
                 </div>
-            </div>
-            </div>
-            <div class="col-2">
-                <img src="@Model.ImageUrl" class="w-100" />
-            </div>
-        </form>
+                <div class="col-2">
+                    <img src="@Model.ImageUrl" class="w-100" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
 @section Scripts {
     @{
         <partial name="_ValidationScriptsPartial"></partial>
+        <script src="~/js/textarea_resize.js"></script>
     }
 }
