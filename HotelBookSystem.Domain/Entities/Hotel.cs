@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace HotelBookSystem.Domain.Entities
 {
@@ -26,7 +27,10 @@ namespace HotelBookSystem.Domain.Entities
         public IFormFile? Image { get; set; }
         [Display(Name = "Image URL")]
         public string? ImageUrl { get; set; }
-        public DateOnly Last_Update { get; set; }
+        public DateOnly? Create_Date { get; set; }
+        public DateOnly? Update_Date { get; set; }
+        [ValidateNever]
+        public List<Amenity> Amenities { get; set; }
 
 
     }
