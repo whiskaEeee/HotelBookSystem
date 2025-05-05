@@ -1,67 +1,58 @@
 ﻿@model List<HotelNumber>
 
-<style>
-    .my-table {
-        background-color: #fff7d3;
-        color: #333;
-    }
-
-        .my-table th {
-            background-color: #077A7D;
-            color: white;
-        }
-
-        .my-table td {
-            background-color: #F5EEDD;
-        }
-</style>
-
-<h2 class="text-center mb-0 mt-5">Hotel Numbers</h2>
-
-<div class="container mt-5 px-2">
-
-    <div class="table-responsive rounded-3">
-        <table class="table my-table table-responsive table-bordered rounded" style="border-color: #077A7D">
-
-            <thead>
-                <tr class="text-center">
-                    <th scope="col" class="text-light">Отель</th>
-                    <th scope="col" class="text-light">Номер</th>
-                    <th width="40%"></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach(var hotelNumber in Model)
-                {
-                    <tr class="text-center">
-                        <td class="align-middle">@hotelNumber.Hotel.Name</td>
-                        <td class="align-middle">@hotelNumber.Hotel_Number</td>
-                        <td>
-                            <div class="w-75 btn-group" role="group">
-                                <a asp-controller="HotelNumber" asp-action="Update" asp-route-hotelNumberId="@hotelNumber.Hotel_Number" class="btn btn-success mx-2 rounded">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </a>
-                                <a asp-controller="HotelNumber" asp-action="Delete" asp-route-hotelNumberId="@hotelNumber.Hotel_Number" class="btn btn-danger mx-2 rounded">
-                                    <i class="bi bi-trash-fill"></i> Delete
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
+<div class="card shadow my-5">
+    <div class="card-header border-0 text-light text-center dark blue"
+         style="background-image: linear-gradient(-30deg, rgba(0, 118, 189, 0.1), transparent 100%);">
+        <h3 class="mb-0">Номера</h3>
     </div>
-
+    <table class="table mb-0">
+        <thead>
+            <tr>
+                <th class="p-0" scope="col"></th>
+                <th class="p-0" scope="col"></th>
+                <th class="p-0" scope="col"></th>
+                <th class="p-0" scope="col" width="30%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hotelNumber in Model)
+            {
+                <tr>
+                    <td>
+                        <div style="width: 60px; aspect-ratio: 1 / 1; overflow: hidden; border-radius: 50%;">
+                            <img src="@hotelNumber.Hotel.ImageUrl" style="width: 100%; height: 100%; object-fit: cover;" />
+                        </div>
+                    </td>
+                    <td style="font-size: 20px; vertical-align: middle;">
+                        <div class="d-flex align-items-center" style="height: 100%;">
+                            @hotelNumber.Hotel.Name
+                        </div>
+                    </td>
+                    <td style="font-size: 20px; vertical-align: middle;">
+                        <div class="d-flex align-items-center" style="height: 100%;">
+                            @hotelNumber.Hotel_Number
+                        </div>
+                    </td>
+                    <td class="align-middle text-center">
+                        <div class="d-flex justify-content-center align-items-center gap-2 w-100">
+                            <a asp-controller="HotelNumber" asp-action="Update" asp-route-hotelNumberId="@hotelNumber.Hotel_Number"
+                               class="btn btn-success rounded">
+                                <i class="bi bi-pencil-square"></i> Изменить
+                            </a>
+                            <a asp-controller="HotelNumber" asp-action="Delete" asp-route-hotelNumberId="@hotelNumber.Hotel_Number"
+                               class="btn btn-danger rounded">
+                                <i class="bi bi-trash-fill"></i> Удалить
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
-
-
-
 
 <div class="d-flex w-25" style="float: right;">
-    <a asp-controller="HotelNumber" asp-action="Create" class="btn btn-primary rounded w-100">Create</a>
+    <a asp-controller="HotelNumber" asp-action="Create" class="btn btn-dark rounded border w-100">
+        <i class="bi bi-plus-circle"></i> Create
+    </a>
 </div>
-
-
-
