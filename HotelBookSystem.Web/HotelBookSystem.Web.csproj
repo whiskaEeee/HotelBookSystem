@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Views\Amenity\" />
     <Folder Include="wwwroot\images\HotelImages\" />
   </ItemGroup>
 
