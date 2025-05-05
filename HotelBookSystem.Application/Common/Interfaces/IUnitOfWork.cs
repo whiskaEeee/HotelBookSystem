@@ -10,6 +10,7 @@ namespace HotelBookSystem.Application.Common.Interfaces
     {
         IHotelRepository Hotel { get; }
         IHotelNumberRepository HotelNumber { get; }
+        IAmenityRepository Amenity { get; }
         void Save();
     }
 }
