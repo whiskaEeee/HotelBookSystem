@@ -1,19 +1,30 @@
 using System.Diagnostics;
+using HotelBookSystem.Application.Common.Interfaces;
 using HotelBookSystem.Web.Models;
+using HotelBookSystem.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HotelBookSystem.Web.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IUnitOfWork _unitOfWork;
+
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            return View();
+            _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Privacy()
+        public IActionResult Index()
         {
-            return View();
+            HomeVM homeVM = new()
+            {
+                Hotels = _unitOfWork.Hotel.GetAll(includeProperties: "Amenities"),
+                CheckInDate = DateOnly.FromDateTime(DateTime.Now),
+                CheckOutDate = DateOnly.FromDateTime(DateTime.Now.AddDays(1)),
+                NumberOfNights = 1
+            };
+            return View(homeVM);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
