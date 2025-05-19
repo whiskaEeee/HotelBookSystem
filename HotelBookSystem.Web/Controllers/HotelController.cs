@@ -1,13 +1,16 @@
 ﻿using System.Diagnostics;
 using HotelBookSystem.Application.Common.Interfaces;
+using HotelBookSystem.Application.Utility;
 using HotelBookSystem.Domain.Entities;
 using HotelBookSystem.Infrastructure.Data;
 using HotelBookSystem.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace HotelBookSystem.Web.Controllers
 {
+    [Authorize(Roles = StaticDetails.AdminRole)]
     public class HotelController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

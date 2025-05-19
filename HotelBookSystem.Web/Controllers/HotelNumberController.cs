@@ -1,16 +1,19 @@
 ﻿using System.Diagnostics;
 using HotelBookSystem.Application.Common.Interfaces;
+using HotelBookSystem.Application.Utility;
 using HotelBookSystem.Domain.Entities;
 using HotelBookSystem.Infrastructure.Data;
 using HotelBookSystem.Infrastructure.Repository;
 using HotelBookSystem.Web.Models;
 using HotelBookSystem.Web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelBookSystem.Web.Controllers
 {
+    [Authorize(Roles = StaticDetails.AdminRole)]
     public class HotelNumberController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -45,6 +48,15 @@ namespace HotelBookSystem.Web.Controllers
         [HttpPost]
         public IActionResult Create(HotelNumberVM hotelNumberVM)
         {
+            if (hotelNumberVM.HotelNumber is null)
+            {
+                hotelNumberVM.HotelList = _unitOfWork.Hotel.GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                return View(hotelNumberVM);
+            }
 
             bool roomNumberExists = _unitOfWork.HotelNumber.Any(u => u.Hotel_Number == hotelNumberVM.HotelNumber.Hotel_Number);
 
@@ -97,10 +109,17 @@ namespace HotelBookSystem.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.HotelNumber.Update(hotelNumberVM.HotelNumber);
-                _unitOfWork.Save();
-                TempData["success"] = "Успешно сохранено";
-                return RedirectToAction("Index");
+                if (hotelNumberVM.HotelNumber is not null)
+                {
+                    _unitOfWork.HotelNumber.Update(hotelNumberVM.HotelNumber);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Успешно сохранено";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["error"] = "Ошибка: номер отеля не найден.";
+                }
             }
 
             hotelNumberVM.HotelList = _unitOfWork.Hotel.GetAll().Select(u => new SelectListItem

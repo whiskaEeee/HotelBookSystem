@@ -1,15 +1,18 @@
 ﻿using System.Diagnostics;
 using HotelBookSystem.Application.Common.Interfaces;
+using HotelBookSystem.Application.Utility;
 using HotelBookSystem.Domain.Entities;
 using HotelBookSystem.Infrastructure.Data;
 using HotelBookSystem.Web.Models;
 using HotelBookSystem.Web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace HotelBookSystem.Web.Controllers
 {
+    [Authorize(Roles = StaticDetails.AdminRole)]
     public class AmenityController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -45,10 +48,13 @@ namespace HotelBookSystem.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Amenity.Add(amenityVM.Amenity);
-                _unitOfWork.Save();
-                TempData["success"] = "Успешно добавлено";
-                return RedirectToAction(nameof(Index));
+                if (amenityVM.Amenity is not null)
+                {
+                    _unitOfWork.Amenity.Add(amenityVM.Amenity);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Успешно добавлено";
+                    return RedirectToAction(nameof(Index));
+                }
             }
 
             amenityVM.HotelList = _unitOfWork.Hotel.GetAll().Select(u => new SelectListItem
@@ -87,10 +93,13 @@ namespace HotelBookSystem.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _unitOfWork.Amenity.Update(amenityVM.Amenity);
-                _unitOfWork.Save();
-                TempData["success"] = "Успешно обновлено";
-                return RedirectToAction(nameof(Index));
+                if (amenityVM.Amenity is not null)
+                {
+                    _unitOfWork.Amenity.Update(amenityVM.Amenity);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Успешно обновлено";
+                    return RedirectToAction(nameof(Index));
+                }
             }
 
             amenityVM.HotelList = _unitOfWork.Hotel.GetAll().Select(u => new SelectListItem
@@ -127,15 +136,18 @@ namespace HotelBookSystem.Web.Controllers
         [HttpPost]
         public IActionResult Delete(AmenityVM amenityVM)
         {
-            Amenity? objFromDb = _unitOfWork.Amenity
-                .Get(u => u.Id == amenityVM.Amenity.Id);
-
-            if (objFromDb is not null)
+            if (amenityVM.Amenity is not null)
             {
-                _unitOfWork.Amenity.Remove(objFromDb);
-                _unitOfWork.Save();
-                TempData["success"] = "Успешно удалено";
-                return RedirectToAction("Index");
+                Amenity? objFromDb = _unitOfWork.Amenity
+                    .Get(u => u.Id == amenityVM.Amenity.Id);
+
+                if (objFromDb is not null)
+                {
+                    _unitOfWork.Amenity.Remove(objFromDb);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Успешно удалено";
+                    return RedirectToAction("Index");
+                }
             }
 
             return View(amenityVM);
