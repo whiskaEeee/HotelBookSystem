@@ -110,7 +110,7 @@ namespace HotelBookSystem.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
-            if(!ModelState.IsValid)
+            if(ModelState.IsValid)
             {
                 ApplicationUser user = new()
                 {
