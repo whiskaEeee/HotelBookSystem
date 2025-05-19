@@ -1,0 +1,55 @@
+﻿@model HomeVM
+
+<div id="hotelList">
+    @foreach (var hotel in Model.Hotels)
+    {
+        <div class="container py-0">
+            <article class="postcard dark blue">
+                <a class="postcard__img_link">
+                    <img class="postcard__img" src="@hotel.ImageUrl" />
+                </a>
+                <div class="postcard__text">
+                    <h1 class="postcard__title blue">@hotel.Name</h1>
+                    <div class="postcard__subtitle small">
+                        <time datetime="2020-05-25 12:00:00">
+                            <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
+                        </time>
+                    </div>
+                    <div class="postcard__bar"></div>
+                    <div class="postcard__preview-txt">@hotel.Description</div>
+                    <ul class="postcard__tagbox">
+                        <li class="tag__item" data-bs-toggle="modal" data-bs-target="#modal-@(hotel.Id)">Details</li>
+                    </ul>
+                    @if (!hotel.IsAvaliable || Model.CheckInDate <= DateOnly.FromDateTime(DateTime.Now))
+                    {
+                        <a disabled class="btn btn-outline-warning">
+                            <i disabled>Недоступно</i>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-info">
+                            <i>Забронировать</i>
+                        </a>
+                    }
+                </div>
+            </article>
+        </div>
+
+        <div class="modal fade" id="modal-@(hotel.Id)" tabindex="-1" aria-labelledby="DetailsModal" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content dark blue">
+                    <div class="modal-header border-0 dark blue">
+                        <h1 class="modal-title fs-3 text-light mx-auto" style="position: relative; z-index: 1;" id="DetailsModal">Подробная информация</h1>
+                    </div>
+                    <div class="modal-body text-light m-0 dark blue">
+                        <partial name="_HotelDetails" model="@hotel" />
+                    </div>
+                    <div class="modal-footer border-0 text-light dark blue">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
