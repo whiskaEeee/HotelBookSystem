@@ -1,0 +1,54 @@
+﻿@model LoginVM
+
+<div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="col-6">
+        <div class="card mt-2 mx-auto p-4 bg-light w-100">
+            <div class="card-header border-0 text-light text-center dark blue"
+                 style="background-image: linear-gradient(-30deg, rgba(0, 118, 189, 0.1), transparent 100%);">
+                <h3 class="mb-0">Login</h3>
+            </div>
+            <div class="card-body bg-light">
+                <div class="container">
+                    <form method="post">
+                        <input hidden asp-for="RedirectURL" />
+                        <div class="controls">
+                            <div class="row">
+                                <div class="form-floating py-1 col-12">
+                                    <input asp-for="Email" class="form-control border shadow" aria-required="true">
+                                    <label asp-for="Email" class="ms-2"></label>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-floating py-1 col-12">
+                                    <input asp-for="Password" class="form-control border shadow" aria-required="true">
+                                    <label asp-for="Password" class="ms-2"></label>
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group form-check my-2">
+                                    <input asp-for="RememberMe" type="checkbox" class="form-check-input">
+                                    <label class="form-check-label text-dark">Remember Me</label>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary px-4">Login</button>
+                            <div class="d-flex justify-content-between pt-2">
+                                <p class="m-0">
+                                    <a asp-action="ForgotPassword">Forgot your password?</a>
+                                </p>
+                                <p class="m-0">
+                                    <a asp-action="Register" asp-route-returnURL="@Model.RedirectURL">Register as a new user</a>
+                                </p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

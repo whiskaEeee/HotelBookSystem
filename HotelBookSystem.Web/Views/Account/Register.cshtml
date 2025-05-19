@@ -1,0 +1,73 @@
+﻿@model RegisterVM
+
+<div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="col-6">
+        <div class="card mt-2 mx-auto p-4 bg-light w-100">
+            <div class="card-header border-0 text-light text-center dark blue"
+                 style="background-image: linear-gradient(-30deg, rgba(0, 118, 189, 0.1), transparent 100%);">
+                <h3 class="mb-0">Регистрация</h3>
+            </div>
+            <div class="card-body bg-light">
+                <div class="container">
+                    <form method="post">
+                        <input hidden asp-for="RedirectURL" />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="controls">
+                            <div class="row">
+                                <div class="form-floating py-1 col-12">
+                                    <input asp-for="Email" class="form-control border shadow" aria-required="true">
+                                    <label asp-for="Email" class="ms-2"></label>
+                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating py-1 col-12">
+                                        <input asp-for="Name" class="form-control border shadow" aria-required="true">
+                                        <label asp-for="Name" class="ms-2"></label>
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating py-1 col-12">
+                                        <input asp-for="PhoneNumber" class="form-control border shadow" aria-required="true">
+                                        <label asp-for="PhoneNumber" class="ms-2"></label>
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-floating py-1 col-12">
+                                        <input asp-for="Password" class="form-control border shadow" aria-required="true">
+                                        <label asp-for="Password" class="ms-2"></label>
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating py-1 col-12">
+                                        <input asp-for="ConfirmPassword" class="form-control border shadow" aria-required="true">
+                                        <label asp-for="ConfirmPassword" class="ms-2"></label>
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="form-floating py-1 col-12">
+                                    <select asp-for="Role" asp-items="@Model.RoleList" class="form-select">
+                                        <option disabled selected>__Выберите роль__</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn btn-secondary px-4">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
