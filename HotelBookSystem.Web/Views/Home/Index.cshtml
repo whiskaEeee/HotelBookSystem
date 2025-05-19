@@ -1,77 +1,43 @@
 ﻿@model HomeVM
 
-<div class="row p-0 mx-0 py-4 mb-4">
-
-    <div class="col-12 col-md-5 ps-0">
-        <div class="form-group">
-            <label class="text-dark">Дата заселения</label>
-            <input asp-for="CheckInDate" type="date" class="form-control" />
-        </div>
-    </div>
-
-    <div class="col-8 col-md-4 pl-2 pr-2 ps-0">
-        <div class="form-group">
-            <label class="text-dark">Кол-во ночей</label>
-            <select class="form-select" asp-for="NumberOfNights">
-                @for (var i = 1; i < 14; i++)
-                {
-                    <option value="@i">@i</option>
-                }
-            </select>
-        </div>
-    </div>
-    <div class="col-1"></div>
-    <div class="col-4 col-md-2 pt-4 pr-2 px-0">
-        <div class="form-group">
-            <button type="button" onclick="fnLoadVillaList()" class="btn btn-success btn-block w-100">
-                <i class="bi bi-search"></i>  &nbsp; Check Availability
-            </button>
-
-        </div>
-    </div>
-
-</div>
-<div class="row">
-    @foreach (var hotel in Model.Hotels)
-    {
-        <div class="container py-0">
-            <article class="postcard dark blue">
-                <a class="postcard__img_link">
-                    <img class="postcard__img" src="@hotel.ImageUrl" />
-                </a>
-                <div class="postcard__text">
-                    <h1 class="postcard__title blue">@hotel.Name</h1>
-                    <div class="postcard__subtitle small">
-                        <time datetime="2020-05-25 12:00:00">
-                            <i class="fas fa-calendar-alt mr-2"></i>Mon, May 25th 2020
-                        </time>
-                    </div>
-                    <div class="postcard__bar"></div>
-                    <div class="postcard__preview-txt">@hotel.Description</div>
-                    <ul class="postcard__tagbox">
-                        <li class="tag__item" data-bs-toggle="modal" data-bs-target="#modal-@(hotel.Id)">Details</li>
-                    </ul>
-                </div>
-            </article>
-        </div>
-
-        <div class="modal fade" id="modal-@(hotel.Id)" tabindex="-1" aria-labelledby="DetailsModal" aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content dark blue">
-                    <div class="modal-header border-0 dark blue">
-                        <h1 class="modal-title fs-3 text-light mx-auto" style="position: relative; z-index: 1;" id="DetailsModal">Подробная информация</h1>
-                    </div>
-                    <div class="modal-body text-light m-0 dark blue">
-                        <partial name="_HotelDetails" model="@hotel" />
-                    </div>
-                    <div class="modal-footer border-0 text-light dark blue">
-                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
-                    </div>
-                </div>
+<form method="post" asp-action="GetHotelsByDate">
+    <input hidden asp-for="CheckOutDate" />
+    <div class="row p-0 mx-0 py-4 mb-4">
+        <div class="col-12 col-md-5 ps-0">
+            <div class="form-group">
+                <label class="text-dark">Дата заселения</label>
+                <input asp-for="CheckInDate" id="CheckInDate" type="date" class="form-control" />
             </div>
         </div>
+        <div class="col-8 col-md-4 pl-2 pr-2 ps-0">
+            <div class="form-group">
+                <label class="text-dark">Кол-во ночей</label>
+                <select class="form-select" asp-for="NumberOfNights" id="NumberOfNights">
+                    @for (var i = 1; i < 14; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="col-1"></div>
+        <div class="col-4 col-md-2 pt-4 pr-2 px-0">
+            <div class="form-group">
+                <button type="button" onclick="fnLoadHotelList()" class="btn btn-success btn-block w-100">
+                    <i class="bi bi-search"></i>  &nbsp; Check Availability
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
 
-
-    }
-
+<div class="row">
+    <partial name="_HotelList" model="Model" />
 </div>
+
+@section Scripts{
+    <script>
+        const getHotelsUrl = '@Url.Action("GetHotelsByDate", "Home")';
+    </script>
+    <script src="~/js/hotel-search.js"></script>
+}
