@@ -1,0 +1,23 @@
+﻿@inject Microsoft.AspNetCore.Identity.UserManager<ApplicationUser> UserManager
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> SignInManager
+
+<ul class="navbar-nav">
+	@if (SignInManager.IsSignedIn(User))
+	{
+		<li class="nav-item">
+			<a class="nav-link text-light" href="#">@UserManager.GetUserName(User)</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Logout">Выход</a>
+		</li>
+	}
+	else
+	{
+		<li class="nav-item">
+			<a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">Войти</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Register">Регистрация</a>
+		</li>
+	}
+</ul>
