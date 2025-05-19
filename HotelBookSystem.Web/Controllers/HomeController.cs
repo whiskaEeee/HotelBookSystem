@@ -32,6 +32,7 @@ namespace HotelBookSystem.Web.Controllers
         [HttpPost]
         public IActionResult GetHotelsByDate(int NumberOfNights, DateOnly CheckInDate)
         {
+            Thread.Sleep(500); //симул€ци€ задержки
             var Hotels = _unitOfWork.Hotel.GetAll(includeProperties: "Amenities");
             //симул€ци€ логики доступности отелей
             foreach (var hotel in Hotels)
