@@ -20,7 +20,8 @@ namespace HotelBookSystem.Domain.Entities
         [MaxLength(256)]
         public string? Description { get; set; }
         [Display(Name = "Цена за ночь")]
-        public double? Price { get; set; }
+        [Required]
+        public required double Price { get; set; }
         [Range(1, 30)]
         public int Occupancy { get; set; }
         [NotMapped]
