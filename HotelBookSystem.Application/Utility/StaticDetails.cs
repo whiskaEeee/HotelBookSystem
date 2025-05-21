@@ -10,5 +10,12 @@ namespace HotelBookSystem.Application.Utility
     {
         public const string AdminRole = "Admin";
         public const string CustomerRole = "Customer";
+
+        public const string StatusPending = "Pending";
+        public const string StatusApproved = "Approved";
+        public const string StatusCheckedIn = "CheckedIn";
+        public const string StatusCompleted = "Completed";
+        public const string StatusCancelled = "Cancelled";
+        public const string StatusRefunded = "Refunded";
     }
 }

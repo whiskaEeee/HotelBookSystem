@@ -23,13 +23,16 @@
                     @if (!hotel.IsAvaliable || Model.CheckInDate <= DateOnly.FromDateTime(DateTime.Now))
                     {
                         <a disabled class="btn btn-outline-warning">
-                            <i disabled>Недоступно</i>
+                            Недоступно
                         </a>
                     }
                     else
                     {
-                        <a class="btn btn-outline-info">
-                            <i>Забронировать</i>
+                        <a asp-controller="Booking" asp-action="FinalizeBooking"
+                        class="btn btn-outline-info" asp-route-hotelId="@hotel.Id"
+                           asp-route-checkInDate="@Model.CheckInDate.ToString("yyyy-MM-dd")"
+                        asp-route-numberOfNights="@Model.NumberOfNights">
+                            Забронировать
                         </a>
                     }
                 </div>
