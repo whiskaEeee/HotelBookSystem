@@ -1,0 +1,44 @@
+﻿@model List<string>
+
+<div class="card shadow my-5">
+    <div class="card-header border-0 text-light text-center dark blue"
+    style="background-image: linear-gradient(-30deg, rgba(0, 118, 189, 0.1), transparent 100%);">
+        <h3 class="mb-0">Записи</h3>
+    </div>
+    <div class="d-flex justify-content-end pb-4 pt-2">
+        <ul class="list-group list-group-horizontal-sm">
+            @foreach(var status in Model)
+            {
+                <a style="text-decoration: none" asp-controller="Booking" asp-action="Index"
+                asp-route-status="@status">
+                    <li class="list-group-item @(status == Context.Request.Query["status"] ? "text-white bg-success" : "")">
+                            @status
+                    </li>
+                </a>
+            }
+        </ul>
+    </div>
+    <table id="bookingsTable" class="table mb-0">
+        <thead>
+            <tr>
+                <th class="p-0" scope="col">Id</th>
+                <th class="p-0" scope="col">Имя</th>
+                <th class="p-0" scope="col">Тел.</th>
+                <th class="p-0" scope="col">Email</th>
+                <th class="p-0" scope="col">Статус</th>
+                <th class="p-0" scope="col">Заселение</th>
+                <th class="p-0" scope="col">Кол-во ночей</th>
+                <th class="p-0" scope="col">Стоимость</th>
+                <th class="p-0" scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+                
+        </tbody>
+    </table>
+</div>
+
+
+@section Scripts {
+	<script src="~/js/booking.js"></script>
+}

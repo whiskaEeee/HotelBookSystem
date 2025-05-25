@@ -123,5 +123,63 @@ namespace HotelBookSystem.Web.Controllers
             }
             return View(bookingId);
         }
+
+        [HttpGet]
+        public IActionResult BookingDetails(int bookingId)
+        {
+            Booking bookingFromDb = _unitOfWork.Booking.Get(u => u.Id == bookingId,
+                includeProperties: "User,Hotel");
+            if (bookingFromDb is null)
+            {
+                return NotFound();
+            }
+            return View(bookingFromDb);
+        }
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            List<string> statusList = new()
+            {
+                StaticDetails.StatusPending,
+                StaticDetails.StatusApproved,
+                StaticDetails.StatusCheckedIn,
+                StaticDetails.StatusCompleted,
+                StaticDetails.StatusCancelled,
+                StaticDetails.StatusRefunded
+            };
+            return View(statusList);
+        }
+
+        // ==================================== API CALLS ====================================
+        #region API Calls
+        [HttpGet]
+        public IActionResult GetAll(string status)
+        {
+            IEnumerable<Booking> bookings;
+
+            if (User.IsInRole(StaticDetails.AdminRole))
+            {
+                bookings = _unitOfWork.Booking.GetAll(includeProperties: "User,Hotel");
+            }
+            else
+            {
+                var claimsIdentity = User.Identity as ClaimsIdentity;
+                var userId = claimsIdentity?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (userId is null) 
+                {
+                    return Json(new { data = Enumerable.Empty<Booking>() });
+                }
+
+                bookings = _unitOfWork.Booking.GetAll(u => u.UserId == userId, includeProperties: "User,Hotel");
+            }
+            if (!string.IsNullOrEmpty(status))
+            {
+                bookings = bookings.Where(u => u.Status != null && u.Status.Equals(status, StringComparison.OrdinalIgnoreCase));
+            }
+            return Json(new { data = bookings });
+        }
+        #endregion
     }
 }

@@ -61,18 +61,18 @@
                 </div>
                 <div class="form-group pt-2">
                     <label asp-for="CheckInDate" class="text-dark">Check in Date</label>
-                    <input asp-for="CheckInDate" value="@Model.CheckInDate.ToString("dd.MM.yyyy")" disabled class="form-control" />
+                    <input asp-for="CheckInDate" disabled value="@Model.CheckInDate.ToString("dd.MM.yyyy")" disabled class="form-control" />
                 </div>
                 <div class="form-group pt-2">
                     <label asp-for="CheckOutDate" class="text-dark">Check Out Date</label>
-                    <input asp-for="CheckOutDate" value="@Model.CheckOutDate.ToString("dd.MM.yyyy")" disabled class="form-control" />
+                    <input asp-for="CheckOutDate" disabled value="@Model.CheckOutDate.ToString("dd.MM.yyyy")" disabled class="form-control" />
                 </div>
                 <div class="form-group pt-2">
                     <label asp-for="NumberOfNights" class="text-dark">No. of nights</label>
                     <input asp-for="NumberOfNights" disabled class="form-control" />
                 </div>
                 <div class="form-group pt-2 pt-md-4">
-                    @if (Model.Hotel.IsAvaliable)
+                    @if (Model.Hotel is not null && Model.Hotel.IsAvaliable)
                     {
                         <button type="submit" class="btn btn-info form-control">Продолжить</button>
                     }

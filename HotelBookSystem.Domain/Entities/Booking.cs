@@ -37,6 +37,7 @@ namespace HotelBookSystem.Domain.Entities
         public string? Status { get; set; }
 
         [Required]
+        [Display(Name = "Дата бронирования")]
         public DateOnly BookingDate { get; set; }
         [Required]
         [Display(Name = "Дата заселения")]
@@ -46,12 +47,15 @@ namespace HotelBookSystem.Domain.Entities
         public DateOnly CheckOutDate { get; set; }
 
         public bool IsPaymentSuccessful { get; set; } = false;
+        [Display(Name = "Дата платежа")]
         public DateTime PaymentDate { get; set; }
 
         public string? StripeSessionId { get; set; }
         public string? StripePaymentIntentId { get; set; }
 
+        [Display(Name = " Реальная дата заселения")]
         public DateTime ActualCheckInDate { get; set; }
+        [Display(Name = " Реальная дата окончания")]
         public DateTime ActualCheckOutDate { get; set; }
 
         public int HotelNumber { get; set; }

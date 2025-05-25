@@ -31,7 +31,7 @@ namespace HotelBookSystem.Domain.Entities
         public DateOnly? Create_Date { get; set; }
         public DateOnly? Update_Date { get; set; }
         [ValidateNever]
-        public List<Amenity> Amenities { get; set; }
+        public List<Amenity>? Amenities { get; set; }
         [NotMapped]
         public bool IsAvaliable { get; set; } = true;
     }
